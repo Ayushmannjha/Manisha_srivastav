@@ -7,11 +7,13 @@ import { LyricsSection } from './components/LyricsSection';
 import { TourSection } from './components/TourSection';
 import { Footer } from './components/Footer';
 import { CursorParticles } from './components/CursorParticles';
+import { InteractiveMicrophone } from './components/InteractiveMicrophone';
 import { Toaster } from './components/ui/sonner';
 
 export default function App() {
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden">
+      <InteractiveMicrophone />
       <CursorParticles />
       <Navigation />
       <HeroSection />

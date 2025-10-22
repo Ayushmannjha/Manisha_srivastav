@@ -3,173 +3,133 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import * as THREE from 'three';
+import manisha from '../assets/manishalogo.png'
 
-// 3D Music Notes
-function MusicNote({ position, mousePosition }: { position: [number, number, number]; mousePosition: { x: number; y: number } }) {
+// Floating Music Icon (Musical Note Shape)
+function FloatingMusicIcon({ position, type, mousePosition }: { position: [number, number, number]; type: number; mousePosition: { x: number; y: number } }) {
   const meshRef = useRef<THREE.Group>(null);
   const initialPosition = useMemo(() => position, []);
 
   useFrame((state) => {
     if (meshRef.current) {
       const time = state.clock.getElapsedTime();
-      meshRef.current.position.y = initialPosition[1] + Math.sin(time + initialPosition[0]) * 0.3;
-      meshRef.current.position.x = initialPosition[0] + mousePosition.x * 0.3;
-      meshRef.current.position.z = initialPosition[2] + mousePosition.y * 0.3;
-      meshRef.current.rotation.y = time * 0.5;
+      meshRef.current.position.y = initialPosition[1] + Math.sin(time + initialPosition[0]) * 0.5;
+      meshRef.current.position.x = initialPosition[0] + Math.sin(time * 0.5) * 0.3 + mousePosition.x * 0.2;
+      meshRef.current.position.z = initialPosition[2] + Math.cos(time * 0.5) * 0.2 + mousePosition.y * 0.2;
+      meshRef.current.rotation.y = time * 0.3;
+      meshRef.current.rotation.z = Math.sin(time * 0.5) * 0.2;
     }
   });
 
+  // Different music icon types
+  const icons = [
+    // Type 0: Musical Note ♪
+    () => (
+      <>
+        <mesh position={[0, 0, 0]}>
+          <sphereGeometry args={[0.12, 16, 16]} />
+          <meshStandardMaterial color="#fbbf24" emissive="#f59e0b" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+        <mesh position={[0, 0.35, 0]}>
+          <cylinderGeometry args={[0.02, 0.02, 0.5, 8]} />
+          <meshStandardMaterial color="#fbbf24" emissive="#f59e0b" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+        <mesh position={[0.08, 0.5, 0]}>
+          <sphereGeometry args={[0.06, 12, 12]} />
+          <meshStandardMaterial color="#a855f7" emissive="#a855f7" emissiveIntensity={0.5} transparent opacity={0.8} />
+        </mesh>
+      </>
+    ),
+    // Type 1: Treble Clef (stylized)
+    () => (
+      <>
+        <mesh>
+          <torusGeometry args={[0.15, 0.04, 12, 24]} />
+          <meshStandardMaterial color="#ec4899" emissive="#ec4899" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+        <mesh position={[0, 0.3, 0]} rotation={[0, 0, Math.PI / 6]}>
+          <cylinderGeometry args={[0.03, 0.03, 0.6, 12]} />
+          <meshStandardMaterial color="#ec4899" emissive="#ec4899" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+      </>
+    ),
+    // Type 2: Double Notes ♫
+    () => (
+      <>
+        <mesh position={[-0.1, 0, 0]}>
+          <sphereGeometry args={[0.1, 16, 16]} />
+          <meshStandardMaterial color="#a855f7" emissive="#9333ea" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+        <mesh position={[0.1, 0, 0]}>
+          <sphereGeometry args={[0.1, 16, 16]} />
+          <meshStandardMaterial color="#a855f7" emissive="#9333ea" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+        <mesh position={[-0.1, 0.35, 0]}>
+          <cylinderGeometry args={[0.015, 0.015, 0.5, 8]} />
+          <meshStandardMaterial color="#a855f7" emissive="#9333ea" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+        <mesh position={[0.1, 0.35, 0]}>
+          <cylinderGeometry args={[0.015, 0.015, 0.5, 8]} />
+          <meshStandardMaterial color="#a855f7" emissive="#9333ea" emissiveIntensity={0.6} transparent opacity={0.9} />
+        </mesh>
+      </>
+    ),
+    // Type 3: Star (for accent)
+    () => (
+      <mesh>
+        <octahedronGeometry args={[0.15, 0]} />
+        <meshStandardMaterial color="#fbbf24" emissive="#fbbf24" emissiveIntensity={0.7} transparent opacity={0.85} />
+      </mesh>
+    ),
+  ];
+
   return (
     <group ref={meshRef} position={position}>
-      <mesh>
-        <sphereGeometry args={[0.15, 16, 16]} />
-        <meshStandardMaterial color="#fbbf24" emissive="#f59e0b" emissiveIntensity={0.5} />
-      </mesh>
-      <mesh position={[0, 0.3, 0]}>
-        <cylinderGeometry args={[0.02, 0.02, 0.4, 8]} />
-        <meshStandardMaterial color="#fbbf24" emissive="#f59e0b" emissiveIntensity={0.5} />
-      </mesh>
+      {icons[type % icons.length]()}
+      <pointLight position={[0, 0, 0]} intensity={0.5} color={type % 2 === 0 ? "#fbbf24" : "#a855f7"} distance={2} />
     </group>
-  );
-}
-
-// 3D Microphone
-function Microphone({ position, mousePosition }: { position: [number, number, number]; mousePosition: { x: number; y: number } }) {
-  const meshRef = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      const time = state.clock.getElapsedTime();
-      meshRef.current.rotation.z = Math.sin(time * 0.5) * 0.1 + mousePosition.x * 0.1;
-      meshRef.current.position.x = THREE.MathUtils.lerp(
-        meshRef.current.position.x,
-        position[0] + mousePosition.x * 0.5,
-        0.05
-      );
-      meshRef.current.position.y = THREE.MathUtils.lerp(
-        meshRef.current.position.y,
-        position[1] - mousePosition.y * 0.5,
-        0.05
-      );
-    }
-  });
-
-  return (
-    <group ref={meshRef} position={position}>
-      {/* Microphone head */}
-      <mesh>
-        <sphereGeometry args={[0.3, 16, 16]} />
-        <meshStandardMaterial color="#d4d4d8" metalness={0.9} roughness={0.1} />
-      </mesh>
-      {/* Microphone body */}
-      <mesh position={[0, -0.5, 0]}>
-        <cylinderGeometry args={[0.15, 0.2, 0.6, 16]} />
-        <meshStandardMaterial color="#52525b" metalness={0.7} roughness={0.3} />
-      </mesh>
-    </group>
-  );
-}
-
-// Spotlight Beam
-function SpotlightBeam({ position, color }: { position: [number, number, number]; color: string }) {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-  const time = state.clock.getElapsedTime();
-  const mat = meshRef.current.material;
-
-  if (Array.isArray(mat)) {
-    mat.forEach((m) => {
-      m.transparent = true;
-      m.opacity = 0.2 + Math.sin(time * 2) * 0.1;
-    });
-  } else {
-    mat.transparent = true;
-    mat.opacity = 0.2 + Math.sin(time * 2) * 0.1;
-  }
-}
-
-  });
-
-  return (
-    <mesh ref={meshRef} position={position} rotation={[Math.PI / 4, 0, 0]}>
-      <coneGeometry args={[1, 5, 32, 1, true]} />
-      <meshBasicMaterial color={color} transparent opacity={0.2} side={THREE.DoubleSide} />
-    </mesh>
   );
 }
 
 // Main 3D Scene
 function ConcertScene({ mousePosition }: { mousePosition: { x: number; y: number } }) {
-  const particlesRef = useRef<THREE.Points>(null);
-
-  const particleCount = 1500;
-  const particles = useMemo(() => {
-    const positions = new Float32Array(particleCount * 3);
-    for (let i = 0; i < particleCount; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 25;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 25;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 25;
-    }
-    return positions;
-  }, []);
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-
-    if (particlesRef.current) {
-      particlesRef.current.rotation.y = time * 0.05 + mousePosition.x * 0.2;
-      particlesRef.current.rotation.x = mousePosition.y * 0.2;
-
-      const positions = particlesRef.current.geometry.attributes.position.array as Float32Array;
-
-      for (let i = 0; i < particleCount; i++) {
-        const i3 = i * 3;
-        const y = positions[i3 + 1];
-        positions[i3 + 1] = y + Math.sin(time + i * 0.1 + mousePosition.x * 2) * 0.003;
-      }
-
-      particlesRef.current.geometry.attributes.position.needsUpdate = true;
-    }
-  });
-
   return (
     <>
-      {/* Floating Music Notes */}
-      <MusicNote position={[-4, 2, -3]} mousePosition={mousePosition} />
-      <MusicNote position={[4, -1, -2]} mousePosition={mousePosition} />
-      <MusicNote position={[-3, -2, -4]} mousePosition={mousePosition} />
-      <MusicNote position={[5, 1, -3]} mousePosition={mousePosition} />
-      <MusicNote position={[-5, 0, -2]} mousePosition={mousePosition} />
+      {/* Floating Music Icons - More variety */}
+      <FloatingMusicIcon position={[-4, 2, -3]} type={0} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[4, -1, -2]} type={1} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-3, -2, -4]} type={2} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[5, 1, -3]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-5, 0, -2]} type={0} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-2, 3, -5]} type={1} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[3, 2, -4]} type={2} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[0, -3, -3]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-6, -1, -3]} type={0} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[6, 2, -5]} type={1} mousePosition={mousePosition} />
 
-      {/* Microphones */}
-      <Microphone position={[-6, 0, -5]} mousePosition={mousePosition} />
-      <Microphone position={[6, -1, -4]} mousePosition={mousePosition} />
-
-      {/* Spotlight Beams */}
-      <SpotlightBeam position={[-3, 5, -3]} color="#a855f7" />
-      <SpotlightBeam position={[3, 5, -3]} color="#ec4899" />
-      <SpotlightBeam position={[0, 5, -4]} color="#fbbf24" />
-
-      {/* Particles */}
-      <points ref={particlesRef}>
-        <bufferGeometry>
-         <bufferAttribute
-  attach="attributes-position"
-  args={[particles, 3]} // <--- constructor: array, itemSize
-  count={particleCount}
-/>
-
-        </bufferGeometry>
-        <pointsMaterial
-          size={0.04}
-          color="#d8b4fe"
-          transparent
-          opacity={0.6}
-          sizeAttenuation
-        />
-      </points>
+      {/* Additional Layer - More Music Icons */}
+      <FloatingMusicIcon position={[2, 4, -4]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-3, 4, -3]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[4, 3, -5]} type={0} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-5, 2, -4]} type={1} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[1, -2, -5]} type={2} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-1, -1, -2]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[6, 0, -4]} type={0} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-7, 1, -5]} type={1} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[3, -3, -3]} type={2} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-4, -3, -5]} type={3} mousePosition={mousePosition} />
+      
+      {/* Third Layer - Even More Depth */}
+      <FloatingMusicIcon position={[5, 4, -6]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-6, 3, -6]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[2, -4, -4]} type={0} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-2, -4, -6]} type={1} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[7, 1, -5]} type={2} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-7, -2, -4]} type={3} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[0, 4, -5]} type={0} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[1, 2, -6]} type={1} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[-1, 1, -3]} type={2} mousePosition={mousePosition} />
+      <FloatingMusicIcon position={[4, -2, -6]} type={3} mousePosition={mousePosition} />
 
       {/* Lighting for concert atmosphere */}
       <ambientLight intensity={0.3} />
@@ -219,53 +179,20 @@ export function HeroSection() {
 
       {/* Main Content Container */}
       <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-        {/* Left Side - Singer Image with Rotating Vinyl Disk */}
+        {/* Left Side - Singer Image */}
         <div className={`relative group transition-all duration-1000 delay-200 ${isLoaded ? 'opacity-100 -translate-x-0' : 'opacity-0 -translate-x-12'}`}>
           {/* Multiple glowing layers for concert effect */}
           <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 rounded-full blur-3xl opacity-40 group-hover:opacity-70 transition-opacity animate-pulse" />
           <div className="absolute -inset-8 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500 rounded-full blur-2xl opacity-20" />
           
-          <div className="relative aspect-square max-w-md mx-auto lg:mx-0">
+          <div className="relative">
             {/* Outer glow ring */}
             <div className="absolute -inset-6 bg-gradient-to-r from-purple-500 via-pink-500 to-amber-500 rounded-full blur-xl opacity-50 animate-pulse" style={{ animationDuration: '3s' }} />
             
-            {/* Rotating Vinyl Disk */}
-            <div className="absolute inset-0 animate-spin-slow">
-              {/* Vinyl disk background */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-gray-900 via-black to-gray-800 shadow-2xl shadow-amber-500/30" />
-              
-              {/* Vinyl grooves */}
-              {[...Array(15)].map((_, i) => (
-                <div
-                  key={i}
-                  className="absolute inset-0 rounded-full border border-gray-700/40"
-                  style={{
-                    margin: `${8 + i * 12}px`,
-                  }}
-                />
-              ))}
-              
-              {/* Golden center label */}
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-gradient-to-br from-amber-500 via-amber-600 to-amber-700 shadow-[0_0_40px_rgba(251,191,36,0.6)]">
-                <div className="absolute inset-2 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center">
-                  <div className="text-black text-xs font-serif text-center leading-tight">
-                    <div className="mb-1">♪</div>
-                    <div className="text-[10px]">MANISHA</div>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Vinyl reflections/highlights */}
-              <div className="absolute inset-0 rounded-full bg-gradient-to-tr from-transparent via-white/5 to-transparent pointer-events-none" />
-              
-              {/* Notch marker */}
-              <div className="absolute top-4 left-1/2 w-2 h-4 bg-amber-400 rounded-sm -translate-x-1/2 shadow-[0_0_10px_rgba(251,191,36,0.8)]" />
-            </div>
-            
-            {/* Static Image container - positioned above vinyl */}
-            <div className="relative aspect-square rounded-full overflow-hidden border-4 border-amber-400/50 shadow-2xl shadow-purple-500/50 m-8 animate-none">
+            {/* Image container */}
+            <div className="relative aspect-square max-w-md mx-auto lg:mx-0 rounded-full overflow-hidden border-4 border-amber-400/50 shadow-2xl shadow-purple-500/50">
               <ImageWithFallback
-                src="https://images.unsplash.com/photo-1735891969992-1256311f791a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBmZW1hbGUlMjBzaW5nZXIlMjBwZXJmb3JtaW5nfGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080"
+                src={manisha}
                 alt="Manisha Srivastav"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
               />

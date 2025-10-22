@@ -1,96 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { Canvas, useFrame } from '@react-three/fiber';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { Music, Mic, Heart, Star } from 'lucide-react';
-import * as THREE from 'three';
-
-// 3D Glowing Microphone Animation
-function GlowingMicrophone() {
-  const micRef = useRef<THREE.Group>(null);
-  const glowRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    const time = state.clock.getElapsedTime();
-    
-    if (micRef.current) {
-      micRef.current.rotation.y = Math.sin(time * 0.5) * 0.2;
-      micRef.current.position.y = Math.sin(time) * 0.1;
-    }
-
-    if (glowRef.current) {
-  const scale = 1 + Math.sin(time * 2) * 0.1;
-  glowRef.current.scale.set(scale, scale, scale);
-
-  const mat = glowRef.current.material;
-
-  if (Array.isArray(mat)) {
-    mat.forEach((m) => {
-      m.transparent = true;
-      m.opacity = 0.3 + Math.sin(time * 2) * 0.2;
-    });
-  } else {
-    mat.transparent = true;
-    mat.opacity = 0.3 + Math.sin(time * 2) * 0.2;
-  }
-}
-
-  });
-
-  return (
-    <group ref={micRef}>
-      {/* Glow sphere */}
-      <mesh ref={glowRef}>
-        <sphereGeometry args={[1.2, 32, 32]} />
-        <meshBasicMaterial color="#fbbf24" transparent opacity={0.3} />
-      </mesh>
-
-      {/* Microphone head */}
-      <mesh>
-        <sphereGeometry args={[0.5, 32, 32]} />
-        <meshStandardMaterial color="#e5e5e5" metalness={0.9} roughness={0.1} emissive="#fbbf24" emissiveIntensity={0.3} />
-      </mesh>
-
-      {/* Microphone body */}
-      <mesh position={[0, -0.8, 0]}>
-        <cylinderGeometry args={[0.25, 0.3, 1, 32]} />
-        <meshStandardMaterial color="#71717a" metalness={0.7} roughness={0.2} />
-      </mesh>
-
-      {/* Stand */}
-      <mesh position={[0, -1.5, 0]}>
-        <cylinderGeometry args={[0.05, 0.05, 0.6, 16]} />
-        <meshStandardMaterial color="#3f3f46" metalness={0.8} roughness={0.3} />
-      </mesh>
-
-      {/* Lighting */}
-      <pointLight position={[0, 1, 1]} intensity={2} color="#fbbf24" distance={5} />
-      <pointLight position={[0, -1, 1]} intensity={1} color="#a855f7" distance={4} />
-      <ambientLight intensity={0.5} />
-    </group>
-  );
-}
-
-// Animated musical notes and waveforms
-function MusicalBackground() {
-  const wavesRef = useRef<THREE.Group>(null);
-
-  useFrame((state) => {
-    if (wavesRef.current) {
-      wavesRef.current.rotation.z = state.clock.getElapsedTime() * 0.1;
-    }
-  });
-
-  return (
-    <group ref={wavesRef}>
-      {[...Array(8)].map((_, i) => (
-        <mesh key={i} position={[Math.cos(i * 0.785) * 3, Math.sin(i * 0.785) * 3, -2]} rotation={[0, 0, i * 0.785]}>
-          <torusGeometry args={[0.3, 0.05, 8, 32]} />
-          <meshBasicMaterial color="#a855f7" transparent opacity={0.1} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
 
 export function AboutSection() {
   const ref = useRef<HTMLElement>(null);
@@ -181,38 +91,28 @@ export function AboutSection() {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-[1fr_auto] gap-8 items-center">
-            {/* Biography text */}
-            <div className={`space-y-6 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
-              <p className="text-gray-300 leading-relaxed">
-                Manisha Srivastav is a celebrated Indian vocalist whose soulful voice has captivated audiences across the globe. 
-                With a career spanning over a decade, she has established herself as one of the most versatile and emotive singers 
-                in the contemporary music scene.
-              </p>
-              <p className="text-gray-300 leading-relaxed">
-                Her musical journey began at a young age, training in classical Indian music while also embracing modern genres. 
-                This unique blend allows her to create performances that are both rooted in tradition and refreshingly contemporary.
-              </p>
-              <p className="text-gray-300 leading-relaxed">
-                From intimate studio recordings to grand concert halls, Manisha's performances are known for their emotional depth 
-                and technical brilliance. She believes in the power of music to transcend boundaries and connect hearts.
-              </p>
+          {/* Biography text */}
+          <div className={`space-y-6 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-12'}`}>
+            <p className="text-gray-300 leading-relaxed">
+              Manisha Srivastav is a celebrated Indian vocalist whose soulful voice has captivated audiences across the globe. 
+              With a career spanning over a decade, she has established herself as one of the most versatile and emotive singers 
+              in the contemporary music scene.
+            </p>
+            <p className="text-gray-300 leading-relaxed">
+              Her musical journey began at a young age, training in classical Indian music while also embracing modern genres. 
+              This unique blend allows her to create performances that are both rooted in tradition and refreshingly contemporary.
+            </p>
+            <p className="text-gray-300 leading-relaxed">
+              From intimate studio recordings to grand concert halls, Manisha's performances are known for their emotional depth 
+              and technical brilliance. She believes in the power of music to transcend boundaries and connect hearts.
+            </p>
 
-              <div className="pt-6">
-                <div className="inline-block px-6 py-3 bg-gradient-to-r from-amber-600/20 via-purple-600/20 to-pink-600/20 border border-amber-500/30 rounded-full hover:scale-105 transition-transform cursor-default shadow-[0_0_20px_rgba(251,191,36,0.2)]">
-                  <p className="text-amber-300 italic">
-                    "Music is not just what I do, it's who I am"
-                  </p>
-                </div>
+            <div className="pt-6">
+              <div className="inline-block px-6 py-3 bg-gradient-to-r from-amber-600/20 via-purple-600/20 to-pink-600/20 border border-amber-500/30 rounded-full hover:scale-105 transition-transform cursor-default shadow-[0_0_20px_rgba(251,191,36,0.2)]">
+                <p className="text-amber-300 italic">
+                  "Music is not just what I do, it's who I am"
+                </p>
               </div>
-            </div>
-
-            {/* 3D Glowing Microphone */}
-            <div className={`hidden lg:block w-48 h-64 transition-all duration-700 delay-500 ${isVisible ? 'opacity-100 scale-100' : 'opacity-0 scale-90'}`}>
-              <Canvas camera={{ position: [0, 0, 5], fov: 50 }}>
-                <GlowingMicrophone />
-                <MusicalBackground />
-              </Canvas>
             </div>
           </div>
         </div>
