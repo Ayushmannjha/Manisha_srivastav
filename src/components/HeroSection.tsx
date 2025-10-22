@@ -3,7 +3,7 @@ import { Canvas, useFrame } from '@react-three/fiber';
 import { Button } from './ui/button';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import * as THREE from 'three';
-import manisha from '../assets/manishalogo.png'
+import manisha from '../assets/DSC_0045.jpeg'
 
 // Floating Music Icon (Musical Note Shape)
 function FloatingMusicIcon({ position, type, mousePosition }: { position: [number, number, number]; type: number; mousePosition: { x: number; y: number } }) {
