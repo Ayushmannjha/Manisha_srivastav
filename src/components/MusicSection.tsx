@@ -274,7 +274,7 @@ export function MusicSection() {
       description: 'A journey through soulful compositions',
       cover: 'https://images.unsplash.com/photo-1715751036456-9e3b3ed4cc1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aW55bCUyMHJlY29yZCUyMGdvbGR8ZW58MXx8fHwxNzYwOTgwMzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
       tracks: ['Soulful Journey', 'Moonlight Serenade', 'Echoes of Love', 'Dance of Dreams'],
-      spotifyUri: 'playlist/37i9dQZF1DXcBWIGoYBM5M', // Example: Today's Top Hits
+      spotifyUri: 'artist/3jQ1zUoJcgTjz14dWRDYht', // Example: Today's Top Hits
     },
     {
       title: 'Classical Fusion',
@@ -282,7 +282,7 @@ export function MusicSection() {
       description: 'Where tradition meets modernity',
       cover: 'https://images.unsplash.com/photo-1606943537055-6cef4e5d3b68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMHN0dWRpbyUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
       tracks: ['Raga Dreams', 'Timeless Beats', 'Harmony Within', 'Cultural Rhythm'],
-      spotifyUri: 'playlist/37i9dQZF1DX4sWSpwq3LiO', // Example: Peaceful Piano
+      spotifyUri: 'artist/3c1SL1txXk1saBl0QjsFBY', // Example: Peaceful Piano
     },
     {
       title: 'Voice of the Heart',
@@ -290,7 +290,7 @@ export function MusicSection() {
       description: 'Emotions woven into melodies',
       cover: 'https://images.unsplash.com/photo-1735891969992-1256311f791a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBmZW1hbGUlMjBzaW5nZXIlMjBwZXJmb3JtaW5nfGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
       tracks: ['Whispers', 'Golden Sunrise', 'Eternal Bond', 'Heart Strings'],
-      spotifyUri: 'playlist/37i9dQZF1DWXRqgorJj26U', // Example: Rock Classics
+      spotifyUri: 'album/5EsPkj0ER1Ocdgd4MAgrXC', // Example: Rock Classics
     },
     {
       title: 'Acoustic Sessions',
@@ -298,7 +298,7 @@ export function MusicSection() {
       description: 'Raw, pure, and intimate',
       cover: 'https://images.unsplash.com/photo-1618613403887-ed08ea9f8f6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwc3RhZ2UlMjBsaWdodHMlMjBwdXJwbGV8ZW58MXx8fHwxNzYwOTgwMzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
       tracks: ['Unplugged Love', 'Silent Night', 'Morning Raga', 'Gentle Breeze'],
-      spotifyUri: 'playlist/37i9dQZF1DX1s9knjP51Oa', // Example: Acoustic Covers
+      spotifyUri: 'album/3S2j4I12jN3Tmd4LmXOXqS', // Example: Acoustic Covers
     },
   ];
 

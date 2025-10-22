@@ -6,7 +6,7 @@ export function VideoSection() {
   const ref = useRef<HTMLElement>(null);
   const carouselRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedVideo, setSelectedVideo] = useState('dQw4w9WgXcQ');
+  const [selectedVideo, setSelectedVideo] = useState('ecxBrPHkEOE');
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -27,27 +27,27 @@ export function VideoSection() {
 
   const videos = [
     {
-      id: 'dQw4w9WgXcQ',
+      id: 'YhGyL3S3i9E',
       title: 'Latest Performance',
       thumbnail: 'https://images.unsplash.com/photo-1618613403887-ed08ea9f8f6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwc3RhZ2UlMjBsaWdodHMlMjBwdXJwbGV8ZW58MXx8fHwxNzYwOTgwMzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
-      id: 'jNQXAC9IVRw',
+      id: 'XQUaF2d3e6M',
       title: 'Classical Fusion',
       thumbnail: 'https://images.unsplash.com/photo-1574282673493-46d5ff24e086?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaWNyb3Bob25lJTIwc3RhZ2UlMjBzcG90bGlnaHR8ZW58MXx8fHwxNzYwOTY5MzUwfDA&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
-      id: 'kJQP7kiw5Fk',
+      id: 'CT3T3d-uN-Y',
       title: 'Acoustic Session',
       thumbnail: 'https://images.unsplash.com/photo-1606943537055-6cef4e5d3b68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMHN0dWRpbyUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
-      id: '3JZ_D3ELwOQ',
+      id: 'v6WMphMa2yE',
       title: 'Live Concert',
       thumbnail: 'https://images.unsplash.com/photo-1618613403887-ed08ea9f8f6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwc3RhZ2UlMjBsaWdodHMlMjBwdXJwbGV8ZW58MXx8fHwxNzYwOTgwMzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
     },
     {
-      id: 'L_jWHffIx5E',
+      id: '27kj1_jughE',
       title: 'Unplugged',
       thumbnail: 'https://images.unsplash.com/photo-1574282673493-46d5ff24e086?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtaWNyb3Bob25lJTIwc3RhZ2UlMjBzcG90bGlnaHR8ZW58MXx8fHwxNzYwOTY5MzUwfDA&ixlib=rb-4.1.0&q=80&w=1080',
     },
