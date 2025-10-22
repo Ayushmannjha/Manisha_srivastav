@@ -162,11 +162,13 @@ function MicrophoneParticles() {
     <points ref={particlesRef}>
       <bufferGeometry>
         <bufferAttribute
-          attach="attributes-position"
-          count={particleCount}
-          array={particles}
-          itemSize={3}
-        />
+  attach="attributes-position"
+  args={[particles, 3]} // array, itemSize
+  count={particleCount}
+  array={particles}
+  itemSize={3}
+/>
+
       </bufferGeometry>
       <pointsMaterial
         size={0.05}

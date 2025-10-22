@@ -1,5 +1,5 @@
 import { useRef, useState, useEffect } from 'react';
-import { Play, Pause, SkipForward, SkipBack, Volume2, Music2, Disc3 } from 'lucide-react';
+import {   SkipForward, SkipBack, Music2, Disc3 } from 'lucide-react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
@@ -94,11 +94,13 @@ function AlbumCard3D({
         <points ref={particlesRef}>
           <bufferGeometry>
             <bufferAttribute
-              attach="attributes-position"
-              count={particleCount}
-              array={particles}
-              itemSize={3}
-            />
+  attach="attributes-position"
+  args={[particles, 3]} // array, itemSize
+  count={particleCount}
+  array={particles}
+  itemSize={3}
+/>
+
           </bufferGeometry>
           <pointsMaterial
             size={0.08}
@@ -207,11 +209,13 @@ function VinylRecord({ isPlaying, isHovered }: { isPlaying: boolean; isHovered: 
         <points ref={particlesRef}>
           <bufferGeometry>
             <bufferAttribute
-              attach="attributes-position"
-              count={particleCount}
-              array={particles}
-              itemSize={3}
-            />
+  attach="attributes-position"
+  args={[particles, 3]} // array, itemSize
+  count={particleCount}
+  array={particles}
+  itemSize={3}
+/>
+
           </bufferGeometry>
           <pointsMaterial
             size={0.1}
@@ -300,9 +304,7 @@ export function MusicSection() {
 
   const currentAlbum = albums[currentTrack % albums.length];
 
-  const handlePlayPause = () => {
-    setIsPlaying(!isPlaying);
-  };
+ 
 
   const handleNext = () => {
     setCurrentTrack((prev) => (prev + 1) % albums.length);
