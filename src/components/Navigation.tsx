@@ -38,7 +38,7 @@ export function Navigation() {
             isScrolled ? 'opacity-100' : 'opacity-0'
           } transition-opacity duration-500`}
         >
-          Manisha Srivastav
+          Manisha Srivastava
         </a>
 
         {/* Desktop Menu */}

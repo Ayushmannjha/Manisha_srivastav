@@ -210,7 +210,7 @@ export function HeroSection() {
         {/* Right Side - Text Content */}
         <div className={`text-center lg:text-left transition-all duration-1000 ${isLoaded ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <h1 className="text-5xl md:text-7xl lg:text-8xl font-serif mb-6 text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 drop-shadow-[0_0_30px_rgba(168,85,247,0.5)]">
-            Manisha Srivastav
+            Manisha Srivastava
           </h1>
 
           {/* Tagline with golden accents */}
