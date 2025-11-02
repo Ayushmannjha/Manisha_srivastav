@@ -1,75 +1,67 @@
-import { useRef, useState, useEffect } from 'react';
-import { Card, CardContent } from './ui/card';
-import { Music2, BookOpen, Calendar } from 'lucide-react';
+import { useRef, useState, useEffect } from "react";
+import { Card, CardContent } from "./ui/card";
+import { Music2, BookOpen, Calendar, X } from "lucide-react";
+import { ImageWithFallback } from "./figma/ImageWithFallback";
+
+interface Post {
+  _id: string;
+  title: string;
+  date: string;
+  preview: string;
+  image: string;
+  category: string;
+  content: string;
+}
 
 export function LyricsSection() {
   const ref = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        if (entry.isIntersecting) setIsVisible(true);
       },
       { threshold: 0.2 }
     );
-
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-
+    if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
   }, []);
 
-  const posts = [
-    {
-      title: 'Soulful Journey - Lyrics & Meaning',
-      date: 'October 15, 2024',
-      preview: 'Explore the deep meaning behind the lyrics of "Soulful Journey" - a song about finding oneself through music and life experiences...',
-      image: 'https://images.unsplash.com/photo-1606943537055-6cef4e5d3b68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMHN0dWRpbyUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Lyrics',
-    },
-    {
-      title: 'Behind the Scenes: Recording Eternal Melodies',
-      date: 'September 28, 2024',
-      preview: 'Take a peek into the creative process behind my latest album. From late-night sessions to finding the perfect harmony...',
-      image: 'https://images.unsplash.com/photo-1715751036456-9e3b3ed4cc1f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx2aW55bCUyMHJlY29yZCUyMGdvbGR8ZW58MXx8fHwxNzYwOTgwMzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Blog',
-    },
-    {
-      title: 'Moonlight Serenade - Complete Lyrics',
-      date: 'September 10, 2024',
-      preview: 'The complete lyrics to "Moonlight Serenade" with English translations and a note about the inspiration behind each verse...',
-      image: 'https://images.unsplash.com/photo-1735891969992-1256311f791a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBmZW1hbGUlMjBzaW5nZXIlMjBwZXJmb3JtaW5nfGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Lyrics',
-    },
-    {
-      title: 'My Journey with Classical Indian Music',
-      date: 'August 22, 2024',
-      preview: 'Reflecting on my training in classical music and how it shapes my contemporary work. The fusion of tradition and modernity...',
-      image: 'https://images.unsplash.com/photo-1618613403887-ed08ea9f8f6e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25jZXJ0JTIwc3RhZ2UlMjBsaWdodHMlMjBwdXJwbGV8ZW58MXx8fHwxNzYwOTgwMzg2fDA&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Blog',
-    },
-    {
-      title: 'Echoes of Love - Lyrical Poetry',
-      date: 'July 30, 2024',
-      preview: 'The poetic verses of "Echoes of Love" explore the timeless theme of love through musical metaphors and emotional depth...',
-      image: 'https://images.unsplash.com/photo-1606943537055-6cef4e5d3b68?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtdXNpYyUyMHN0dWRpbyUyMHBvcnRyYWl0fGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Lyrics',
-    },
-    {
-      title: 'Collaboration and Creative Inspiration',
-      date: 'July 15, 2024',
-      preview: 'Working with talented musicians and producers has always been a source of joy. Here are some stories from recent collaborations...',
-      image: 'https://images.unsplash.com/photo-1735891969992-1256311f791a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmRpYW4lMjBmZW1hbGUlMjBzaW5nZXIlMjBwZXJmb3JtaW5nfGVufDF8fHx8MTc2MDk3NjY1Nnww&ixlib=rb-4.1.0&q=80&w=1080',
-      category: 'Blog',
-    },
-  ];
+  // ✅ Fetch posts dynamically
+  useEffect(() => {
+    async function fetchPosts() {
+      try {
+        const res = await fetch("http://localhost:5000/api/posts");
+        if (!res.ok) throw new Error("Failed to fetch posts");
+        const data = await res.json();
+        setPosts(data);
+      } catch (err) {
+        console.error("Error fetching posts:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchPosts();
+  }, []);
 
-  // Musical symbols for floating animation
-  const musicalSymbols = ['♪', '♫', '♬', '♩', '♭', '♮', '♯'];
+  const musicalSymbols = ["♪", "♫", "♬", "♩", "♭", "♮", "♯"];
+
+  const getGradientByCategory = (category: string) => {
+    switch (category.toLowerCase()) {
+      case "lyrics":
+        return "from-purple-700 via-indigo-600 to-blue-600";
+      case "story":
+        return "from-rose-600 via-pink-600 to-purple-700";
+      case "poem":
+        return "from-amber-600 via-orange-500 to-red-600";
+      default:
+        return "from-gray-600 via-slate-500 to-zinc-700";
+    }
+  };
 
   return (
     <section
@@ -77,7 +69,7 @@ export function LyricsSection() {
       ref={ref}
       className="relative py-24 bg-gradient-to-b from-black via-purple-950/5 to-black overflow-hidden"
     >
-      {/* Floating musical symbols background */}
+      {/* Floating symbols */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
         {[...Array(15)].map((_, i) => (
           <div
@@ -103,7 +95,6 @@ export function LyricsSection() {
             stroke="url(#waveGradient)"
             strokeWidth="2"
             fill="none"
-            vectorEffect="non-scaling-stroke"
           >
             <animate
               attributeName="d"
@@ -122,8 +113,13 @@ export function LyricsSection() {
         </svg>
       </div>
 
+      {/* Main content */}
       <div className="container mx-auto px-6 relative z-10">
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+        <div
+          className={`text-center mb-16 transition-all duration-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+          }`}
+        >
           <h2 className="text-4xl md:text-5xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 mb-4">
             Lyrics & Stories
           </h2>
@@ -133,78 +129,151 @@ export function LyricsSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-          {posts.map((post, index) => (
-            <div
-              key={post.title}
-              className={`transition-all duration-500 hover:-translate-y-2 ${
-                isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
-              }`}
-              style={{ transitionDelay: `${100 + index * 100}ms` }}
-            >
-              <Card className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border-2 border-amber-500/20 hover:border-amber-500/60 transition-all overflow-hidden group cursor-pointer h-full shadow-[0_0_20px_rgba(168,85,247,0.2)] hover:shadow-[0_0_30px_rgba(251,191,36,0.4)]">
-                <div className="relative aspect-video overflow-hidden">
-                  <div className="absolute -inset-1 bg-gradient-to-r from-amber-600 to-purple-600 blur opacity-0 group-hover:opacity-40 transition-opacity" />
-                  <img
-                    src={post.image}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform group-hover:scale-110"
-                  />
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-amber-600/80 backdrop-blur-sm rounded-full text-white text-xs flex items-center gap-1 shadow-[0_0_10px_rgba(251,191,36,0.5)]">
-                      {post.category === 'Lyrics' ? (
-                        <Music2 className="w-3 h-3" />
-                      ) : (
-                        <BookOpen className="w-3 h-3" />
-                      )}
-                      {post.category}
-                    </span>
+        {/* Posts grid */}
+        {loading ? (
+          <p className="text-center text-gray-400">Loading posts...</p>
+        ) : posts.length === 0 ? (
+          <p className="text-center text-gray-400">No posts found.</p>
+        ) : (
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            {posts.map((post, index) => (
+              <div
+                key={post._id}
+                className={`transition-all duration-500 hover:-translate-y-2 ${
+                  isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
+                }`}
+                style={{ transitionDelay: `${100 + index * 100}ms` }}
+              >
+                <Card
+                  className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 border-2 border-amber-500/20 hover:border-amber-500/60 transition-all overflow-hidden group cursor-pointer h-full"
+                  onClick={() => setSelectedPost(post)}
+                >
+                  <div
+                    className={`relative aspect-video overflow-hidden flex items-center justify-center bg-gradient-to-br ${getGradientByCategory(
+                      post.category
+                    )}`}
+                  >
+                    {post.image ? (
+                      <ImageWithFallback src={post.image} alt={post.title} />
+                    ) : (
+                      <h3 className="text-2xl md:text-3xl font-extrabold text-center px-4 bg-clip-text text-transparent bg-gradient-to-r from-white via-yellow-200 to-amber-400">
+                        {post.title}
+                      </h3>
+                    )}
+
+                    {/* Category Badge */}
+                    <div className="absolute top-4 left-4">
+                      <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-white text-xs flex items-center gap-1">
+                        {post.category === "Lyrics" ? (
+                          <Music2 className="w-3 h-3" />
+                        ) : (
+                          <BookOpen className="w-3 h-3" />
+                        )}
+                        {post.category}
+                      </span>
+                    </div>
                   </div>
 
-                  {/* Corner accents */}
-                  <div className="absolute top-2 right-2 w-2 h-2 bg-amber-400 rounded-full blur-sm opacity-0 group-hover:opacity-70 transition-opacity" />
-                </div>
-                <CardContent className="p-6">
-                  <h3 className="text-white mb-3 line-clamp-2 group-hover:text-amber-300 transition-colors">{post.title}</h3>
-                  <div className="flex items-center gap-2 text-amber-300 text-sm mb-3">
-                    <Calendar className="w-4 h-4" />
-                    <span>{post.date}</span>
-                  </div>
-                  <p className="text-gray-400 text-sm line-clamp-3">{post.preview}</p>
-                  <div className="mt-4">
-                    <span className="text-amber-400 text-sm hover:text-amber-300 transition-colors group-hover:underline inline-flex items-center gap-1">
-                      Read More 
-                      <span className="group-hover:translate-x-1 transition-transform">→</span>
-                    </span>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          ))}
-        </div>
+                  <CardContent className="p-6">
+                    <h3 className="text-white mb-3 line-clamp-2 group-hover:text-amber-300 transition-colors">
+                      {post.title}
+                    </h3>
+                    <div className="flex items-center gap-2 text-amber-300 text-sm mb-3">
+                      <Calendar className="w-4 h-4" />
+                      <span>{new Date(post.date).toLocaleDateString()}</span>
+                    </div>
+                    <p className="text-gray-400 text-sm line-clamp-3">
+                      {post.preview || post.content?.slice(0, 100) + "..."}
+                    </p>
+                    <div className="mt-4">
+                      <span className="text-amber-400 text-sm hover:text-amber-300 transition-colors group-hover:underline inline-flex items-center gap-1">
+                        Read More →
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            ))}
+          </div>
+        )}
 
-        <div className={`text-center mt-12 transition-all duration-700 delay-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <button className="px-8 py-3 bg-gradient-to-r from-amber-600/30 via-purple-600/30 to-pink-600/30 hover:from-amber-600/50 hover:via-purple-600/50 hover:to-pink-600/50 border-2 border-amber-500/50 hover:border-amber-400 rounded-full text-amber-300 transition-all hover:scale-105 active:scale-95 shadow-[0_0_20px_rgba(251,191,36,0.3)]">
+        {/* View All */}
+        <div
+          className={`text-center mt-12 transition-all duration-700 delay-700 ${
+            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
+          <button className="px-8 py-3 bg-gradient-to-r from-amber-600/30 via-purple-600/30 to-pink-600/30 border-2 border-amber-500/50 rounded-full text-amber-300 hover:scale-105 transition-all">
             View All Posts
           </button>
         </div>
       </div>
 
-      <style>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) rotate(0deg);
-            opacity: 0.1;
-          }
-          50% {
-            transform: translateY(-30px) rotate(180deg);
-            opacity: 0.3;
-          }
-        }
-        .animate-float {
-          animation: float linear infinite;
-        }
-      `}</style>
+      {/* 💫 MODAL */}
+      {selectedPost && (
+        <div
+          className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn p-4"
+          onClick={() => setSelectedPost(null)}
+        >
+          <div
+            className="bg-gradient-to-b from-purple-950 to-black max-w-3xl w-full rounded-2xl shadow-2xl border border-amber-500/30 relative animate-fadeIn overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              onClick={() => setSelectedPost(null)}
+              className="absolute top-4 right-4 text-amber-400 hover:text-amber-300 transition"
+            >
+              <X className="w-6 h-6" />
+            </button>
+
+            <div className="max-h-[80vh] overflow-y-auto p-6 custom-scrollbar">
+              {selectedPost.image && (
+                <img
+                  src={selectedPost.image}
+                  alt={selectedPost.title}
+                  className="w-full rounded-lg mb-4"
+                />
+              )}
+              <h2 className="text-3xl font-bold text-amber-300 mb-3">
+                {selectedPost.title}
+              </h2>
+              <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
+                <Calendar className="w-4 h-4" />
+                <span>{new Date(selectedPost.date).toLocaleDateString()}</span>
+              </div>
+              <div className="text-gray-300 whitespace-pre-line leading-relaxed">
+                {selectedPost.content}
+              </div>
+            </div>
+          </div>
+
+          {/* custom scrollbar */}
+          <style>{`
+            .custom-scrollbar::-webkit-scrollbar {
+              width: 8px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-thumb {
+              background: linear-gradient(to bottom, #fbbf24, #a855f7);
+              border-radius: 4px;
+            }
+            .custom-scrollbar::-webkit-scrollbar-track {
+              background: transparent;
+            }
+            @keyframes float {
+              0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }
+              50% { transform: translateY(-30px) rotate(180deg); opacity: 0.3; }
+            }
+            .animate-float { animation: float linear infinite; }
+            @keyframes fadeIn {
+              from { opacity: 0; transform: scale(0.97); }
+              to { opacity: 1; transform: scale(1); }
+            }
+            .animate-fadeIn {
+              animation: fadeIn 0.25s ease-out forwards;
+            }
+          `}</style>
+        </div>
+      )}
     </section>
   );
 }
