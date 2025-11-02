@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const api_url = "http://localhost:5000/api/hero";
+const api_url = "https://manishasrivastav-production.up.railway.app/api/hero";
 
 // ⚙️ Cloudinary credentials (same as About section)
 const CLOUD_NAME = "dajhl8jkt";

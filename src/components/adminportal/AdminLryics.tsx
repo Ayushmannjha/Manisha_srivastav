@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import {  Edit, Trash2, Plus } from "lucide-react";
 
-const api_url = "http://localhost:5000/api/posts";
+const api_url = "https://manishasrivastav-production.up.railway.app/api/posts";
 
 // 🟣 Cloudinary credentials
 const CLOUD_NAME = "dajhl8jkt";

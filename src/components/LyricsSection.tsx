@@ -35,7 +35,7 @@ export function LyricsSection() {
   useEffect(() => {
     async function fetchPosts() {
       try {
-        const res = await fetch("http://localhost:5000/api/posts");
+        const res = await fetch("https://manishasrivastav-production.up.railway.app/api/posts");
         if (!res.ok) throw new Error("Failed to fetch posts");
         const data = await res.json();
         setPosts(data);

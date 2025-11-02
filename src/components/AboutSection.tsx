@@ -48,7 +48,7 @@ console.log(loading)
  useEffect(() => {
     async function fetchAbout() {
       try {
-        const res = await fetch("http://localhost:5000/api/about");
+        const res = await fetch("https://manishasrivastav-production.up.railway.app/api/about");
         if (!res.ok) throw new Error("Failed to fetch About data");
 
         const data: AboutData = await res.json(); // 👈 typed JSON

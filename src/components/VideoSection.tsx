@@ -2,7 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { Play, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "./ui/button";
 
-const API_URL = "http://localhost:5000/api/videos"; // 🔧 Replace with your backend API
+const API_URL = "https://manishasrivastav-production.up.railway.app/api/videos"; // 🔧 Replace with your backend API
 
 export function VideoSection() {
   const ref = useRef<HTMLElement>(null);

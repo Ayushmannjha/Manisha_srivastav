@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Edit, Trash2, Plus } from "lucide-react";
 
-const api_url = "http://localhost:5000/api/videos"; // ⚙️ replace with your backend URL
+const api_url = "https://manishasrivastav-production.up.railway.app/api/videos"; // ⚙️ replace with your backend URL
 
 interface Video {
   _id?: string;
