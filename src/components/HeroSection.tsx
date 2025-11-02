@@ -238,7 +238,7 @@ export function HeroSection() {
   useEffect(() => {
     const fetchHero = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/hero");
+        const res = await fetch("https://manishasrivastav-production.up.railway.app/api/hero");
         const data = await res.json();
         if (data) setHero(data);
       } catch (err) {
