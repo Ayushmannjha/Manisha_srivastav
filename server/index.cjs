@@ -17,7 +17,7 @@ const app = express();
 // Allow requests from your frontend (React app)
 app.use(
   cors({
-    origin: "http://localhost:5173", // change to your production domain later
+    origin: ["http://localhost:5173", "https://manishasrivastav-production.up.railway.app"], // allowed origins // change to your production domain later
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
