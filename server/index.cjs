@@ -59,6 +59,7 @@ app.use("/api/hero", require("./routes/heroRoutes.cjs"));
    ✅ SERVER START
 ------------------------------ */
 
-const PORT = 5000;
+const PORT =  8080;
+
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 
