@@ -55,6 +55,7 @@ app.use("/api/about", aboutRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/hero", require("./routes/heroRoutes.cjs"));
+app.use("/api/my-activity", require("./routes/myActivityRotes.cjs"));
 /* ------------------------------
    ✅ SERVER START
 ------------------------------ */

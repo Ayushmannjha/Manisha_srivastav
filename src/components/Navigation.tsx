@@ -49,8 +49,9 @@ export function Navigation() {
     { name: 'About', href: '#about' },
     { name: 'Music', href: '#music' },
     { name: 'Videos', href: '#videos' },
-    { name: 'Lyrics', href: '#lyrics' },
+    { name: 'Blogs/Lyrics', href: '#lyrics' },
     { name: 'Contact', href: '#contact' },
+    { name: 'My activity', href: '#myActivity' },
   ];
 
   return (
@@ -88,9 +89,7 @@ export function Navigation() {
             </svg>
           </span>
           <span
-            className={`hidden sm:inline-block text-lg md:text-2xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 transition-transform duration-500 ${
-              isScrolled ? 'opacity-100 scale-100' : 'opacity-90 scale-95'
-            }`}
+            className={` sm:inline-block text-lg md:text-2xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 transition-transform duration-500 `}
           >
             Manisha Srivastava
           </span>

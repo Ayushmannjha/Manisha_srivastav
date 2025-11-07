@@ -1,11 +1,11 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Navigation } from "./components/Navigation";
-import { HeroSection } from "./components/HeroSection";
+//import { HeroSection } from "./components/HeroSection";
 import { AboutSection } from "./components/AboutSection";
 import { VideoSection } from "./components/VideoSection";
 import { MusicSection } from "./components/MusicSection";
 import { LyricsSection } from "./components/LyricsSection";
-import { TourSection } from "./components/TourSection";
+import MyActivity from "./components/MyActivity";
 import { Footer } from "./components/Footer";
 import { CursorParticles } from "./components/CursorParticles";
 import { InteractiveMicrophone } from "./components/InteractiveMicrophone";
@@ -31,12 +31,12 @@ export default function App() {
             element={
               <>
                 <Navigation />
-                <HeroSection />
+                <HeroSection2 />
                 <AboutSection />
                 <VideoSection />
                 <MusicSection />
                 <LyricsSection />
-                <TourSection />
+                <MyActivity />
                 <Footer />
               </>
             }

@@ -61,7 +61,7 @@ export function VideoSection() {
     <section
       id="videos"
       ref={ref}
-      className="relative py-24 bg-gradient-to-b from-black via-purple-950/10 to-black overflow-hidden"
+      className="relative py-24  overflow-hidden"
     >
       {/* Background Particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

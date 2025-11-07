@@ -8,7 +8,7 @@ import {
   X,
   User,
   LogOut,
-  Settings,
+  
   Star,
 } from "lucide-react";
 
@@ -16,8 +16,9 @@ import AdminAboutSection from "./AdminAboutSection";
 import AdminVideo from "../adminportal/AdminVideos";
 import AdminLyrics from "../adminportal/AdminLryics";
 import AdminHeroSection from "./AdminHeroSection";
+import AdminMyActivity from "./AdminMyActivity";
 
-type TabType = "about" | "video" | "lyrics"|"hero";
+type TabType = "about" | "video" | "lyrics"|"hero"|"myActivity";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<TabType>("about");
@@ -58,12 +59,7 @@ export default function AdminDashboard() {
 
           {menuOpen && (
             <div className="absolute right-0 mt-2 w-48 bg-black border border-purple-700 rounded-lg shadow-lg py-1 z-50">
-              <button
-                onClick={() => setMenuOpen(false)}
-                className="w-full text-left px-4 py-2 text-sm hover:bg-purple-900/50 flex items-center gap-2"
-              >
-                <Settings size={16} /> Settings
-              </button>
+              
               <div className="border-t border-purple-800 my-1" />
               <button
                 onClick={handleLogout}
@@ -131,12 +127,25 @@ export default function AdminDashboard() {
               setSidebarOpen(false);
             }}
             className={`flex items-center gap-3 p-3 rounded-lg transition ${
-              activeTab === "lyrics"
+              activeTab === "hero"
                 ? "bg-purple-700/60 text-amber-300"
                 : "hover:bg-purple-900/50 text-gray-300"
             }`}
           >
             <Star className="w-5 h-5" /> Intro / Hero Section
+          </button>
+          <button
+            onClick={() => {
+              setActiveTab("myActivity");
+              setSidebarOpen(false);
+            }}
+            className={`flex items-center gap-3 p-3 rounded-lg transition ${
+              activeTab === "myActivity"
+                ? "bg-purple-700/60 text-amber-300"
+                : "hover:bg-purple-900/50 text-gray-300"
+            }`}
+          >
+            <Star className="w-5 h-5" /> My Activity
           </button>
         </aside>
 
@@ -154,6 +163,7 @@ export default function AdminDashboard() {
           {activeTab === "video" && <AdminVideo />}
           {activeTab === "lyrics" && <AdminLyrics />}
           {activeTab==="hero" && <AdminHeroSection/>}
+          {activeTab==="myActivity" && <AdminMyActivity/>}
         </main>
       </div>
     </div>

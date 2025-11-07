@@ -330,7 +330,7 @@ export function MusicSection() {
     <section
       id="music"
       ref={ref}
-      className="relative py-24 bg-gradient-to-b from-black via-purple-950/10 to-black overflow-hidden"
+      className="relative py-24  overflow-hidden"
     >
       {/* Background gradient glows */}
       <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl animate-pulse" />

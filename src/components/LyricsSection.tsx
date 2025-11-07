@@ -67,7 +67,7 @@ export function LyricsSection() {
     <section
       id="lyrics"
       ref={ref}
-      className="relative py-24 bg-gradient-to-b from-black via-purple-950/5 to-black overflow-hidden"
+      className="relative py-24  overflow-hidden"
     >
       {/* Floating symbols */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
