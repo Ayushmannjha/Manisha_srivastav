@@ -26,7 +26,7 @@ export default function HeroSection() {
   }, []);
 
   return (
-    <section className="relative w-full  flex justify-center items-center py-20 px-6">
+    <section id="hero" className="relative w-full  flex justify-center items-center py-20 px-6">
       <div className="max-w-7xl w-full flex flex-col md:flex-row bg-[#111827] rounded-lg overflow-hidden shadow-2xl relative">
         {/* Left Image Section */}
         <div className="relative md:w-1/2 w-full h-[350px] md:h-auto z-20">
