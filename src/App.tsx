@@ -14,6 +14,8 @@ import AdminLogin from "./components/AdminLogin";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminDashboard from "./components/adminportal/AdminDashBoard";
 import HeroSection2 from "./components/HeroSection2";
+import DetailPage from "./components/DetailPage";
+import GalleryPage from "./components/GalleryPage";
 
 export default function App() {
   return (
@@ -36,12 +38,16 @@ export default function App() {
                 <VideoSection />
                 <MusicSection />
                 <LyricsSection />
+                <GalleryPage/>
                 <MyActivity />
+                
                 <Footer />
               </>
             }
           />
           <Route path="/hero2" element={<HeroSection2 />} />
+          <Route path="/detail-page" element={<DetailPage />} />
+
 
           {/* Admin route */}
           <Route path="/admin" element={<AdminLogin />} />

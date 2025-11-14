@@ -17,7 +17,7 @@ const app = express();
 // Allow requests from your frontend (React app)
 app.use(
   cors({
-    origin: ["http://localhost:5173", "https://manishasrivastav-production.up.railway.app","https://manisha-srivastav.vercel.app"], // allowed origins // change to your production domain later
+    origin: ["http://localhost:5173", "www.manishasrivastava.in","https://manishasrivastav-production.up.railway.app","https://manisha-srivastav.vercel.app"], // allowed origins // change to your production domain later
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -56,6 +56,7 @@ app.use("/api/posts", postRoutes);
 app.use("/api/videos", videoRoutes);
 app.use("/api/hero", require("./routes/heroRoutes.cjs"));
 app.use("/api/my-activity", require("./routes/myActivityRotes.cjs"));
+app.use("/api/gallery", require("./routes/galleryRoutes.cjs"));
 /* ------------------------------
    ✅ SERVER START
 ------------------------------ */

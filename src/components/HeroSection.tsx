@@ -234,7 +234,6 @@ export function HeroSection() {
     image?: string;
   } | null>(null);
 
-  // 🧠 Fetch Hero data once on mount
   useEffect(() => {
     const fetchHero = async () => {
       try {
@@ -248,7 +247,6 @@ export function HeroSection() {
     fetchHero();
   }, []);
 
-  // ✨ Smooth entrance
   useEffect(() => {
     const t = setTimeout(() => setIsLoaded(true), 120);
     return () => clearTimeout(t);
@@ -267,12 +265,12 @@ export function HeroSection() {
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-black via-purple-950/30 to-black"
       onMouseMove={handleMouseMove}
     >
-      {/* Background & Lighting */}
+      {/* Background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black" />
-      <div className="absolute inset-0 opacity-60 pointer-events-none">
+      <div className="absolute inset-0 opacity-60 pointer-events-none z-0">
         <Canvas
           dpr={[1, 1.25]}
-          gl={{ antialias: true, powerPreference: "high-performance" }}
+          gl={{ antialias: true }}
           camera={{ position: [0, 0, 10], fov: 75 }}
         >
           <Suspense fallback={null}>
@@ -281,127 +279,48 @@ export function HeroSection() {
         </Canvas>
       </div>
 
-      {/* Glows */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-600/25 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-0 right-1/4 w-96 h-96 bg-pink-600/25 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-amber-500/8 rounded-full blur-3xl pointer-events-none" />
+  {/* Extra right curve (placed above the canvas, behind content) */}
+  <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-linear-to-l from-[#5b21b6]/70 via-[#7c3aed]/40 to-transparent rounded-l-[100px] shadow-[inset_0_0_40px_rgba(0,0,0,0.5)] opacity-95 z-10" />
 
-      {/* Main Content */}
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
-        {/* Left Image */}
+      {/* Main content */}
+  <div className="relative z-20 w-full max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
+        {/* Left image */}
         <div
-          className={`relative group transition-all duration-1000 delay-200 ${
-            isLoaded ? "opacity-100 -translate-x-0" : "opacity-0 -translate-x-12"
+          className={`relative transition-all duration-1000 delay-200 ${
+            isLoaded ? "opacity-100" : "opacity-0 -translate-x-8"
           }`}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-purple-600 via-pink-600 to-amber-500 rounded-full blur-3xl opacity-36 group-hover:opacity-70 transition-opacity" />
-          <div className="absolute -inset-8 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500 rounded-full blur-2xl opacity-20" />
-          <div className="relative">
-            <div className="absolute -inset-6 rounded-full opacity-30 pointer-events-none">
-              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500 via-pink-500 to-amber-500 blur-lg mix-blend-screen" />
-            </div>
-            <div className="relative aspect-square max-w-md mx-auto lg:mx-0 rounded-full overflow-hidden shadow-2xl shadow-purple-500/50">
-              <ImageWithFallback
-                src={hero?.image || manisha}
-                alt={hero?.name || "Manisha Srivastava"}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-500/20 via-transparent to-pink-500/20" />
-            </div>
-            <div className="absolute -top-4 -left-4 w-8 h-8 bg-amber-400 rounded-full blur-md opacity-60" />
-            <div className="absolute -bottom-4 -right-4 w-8 h-8 bg-purple-400 rounded-full blur-md opacity-60" />
+          <div className="relative aspect-square max-w-md mx-auto lg:mx-0 rounded-full overflow-hidden shadow-2xl border-4 border-[#1a2238]">
+            <ImageWithFallback
+              src={hero?.image || manisha}
+              alt={hero?.name || "Manisha Srivastava"}
+              className="w-full h-full object-cover"
+            />
           </div>
         </div>
 
-        {/* Right Text */}
+        {/* Right text */}
+        asdasd
         <div
           className={`text-center lg:text-left transition-all duration-1000 ${
             isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <h1
-            id="hero-heading"
-            className="text-5xl md:text-7xl lg:text-8xl font-serif mb-6 text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 drop-shadow-[0_0_30px_rgba(168,85,247,0.5)]"
-          >
+          <h1 className="text-5xl md:text-6xl font-bold text-yellow-400 mb-4">
             {hero?.name || "Manisha Srivastava"}
           </h1>
-
-          {/* Dynamic tagline */}
-          <div
-            className={`flex flex-wrap justify-center lg:justify-start gap-4 mb-8 text-lg md:text-xl transition-all delay-300 duration-700 ${
-              isLoaded ? "opacity-100" : "opacity-0"
-            }`}
-          >
-            {hero?.tagline?.map((t, i) => (
-              <span
-                key={i}
-                className={
-                  i % 3 === 0
-                    ? "text-amber-300"
-                    : i % 3 === 1
-                    ? "text-purple-300"
-                    : "text-pink-300"
-                }
-              >
-                {t}
-              </span>
-            ))}
-          </div>
-
-          <p
-            className={`text-base md:text-lg text-gray-300 mb-12 max-w-xl leading-relaxed transition-all delay-500 duration-700 ${
-              isLoaded ? "opacity-100" : "opacity-0"
-            }`}
-          >
+          <h2 className="text-gray-300 text-lg mb-6 uppercase tracking-widest">
+            {hero?.tagline?.[0] || "Singer & Performer"}
+          </h2>
+          <p className="text-gray-400 max-w-md mb-8 mx-auto lg:mx-0">
             {hero?.description ||
-              "Experience the magic of melody and emotion through timeless performances that touch the soul. Let the music guide you through a journey of pure artistic expression."}
+              "Building immersive musical experiences that merge creativity and soul. Passionate about melody, rhythm, and crafting performances that inspire people to connect."}
           </p>
 
-          {/* Buttons (unchanged) */}
-          <div
-            className={`flex flex-col sm:flex-row gap-4 justify-center lg:justify-start transition-all delay-700 duration-700 ${
-              isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-            }`}
-          >
-            <Button
-              size="lg"
-              className="bg-gradient-to-r from-amber-500 via-purple-600 to-pink-600 hover:opacity-95 text-white px-6 py-3 transition-transform hover:scale-[1.03] border border-amber-300/40"
-              onClick={() =>
-                document.getElementById("videos")?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Watch Performance
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="border border-amber-300 text-amber-300 hover:bg-amber-500/10 px-6 py-3 transition-transform hover:scale-[1.03]"
-              onClick={() =>
-                document.getElementById("music")?.scrollIntoView({ behavior: "smooth" })
-              }
-            >
-              Listen Now
-            </Button>
-          </div>
+          <Button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold px-6 py-3 rounded-md">
+            Explore My Work
+          </Button>
         </div>
-      </div>
-
-      {/* Scroll Indicator */}
-      <div
-        className={`absolute bottom-10 left-1/2 -translate-x-1/2 transition-all delay-1000 duration-700 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <button
-          aria-label="Scroll to next section"
-          onClick={() =>
-            document.getElementById("music")?.scrollIntoView({ behavior: "smooth" })
-          }
-          className="w-10 h-14 flex items-center justify-center rounded-full border-2 border-amber-400/60 bg-transparent shadow-[0_0_20px_rgba(251,191,36,0.35)] hover:scale-105"
-        >
-          <span className="w-2 h-4 bg-amber-400 rounded-full animate-bounce block" />
-        </button>
       </div>
     </section>
   );

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
-import { Youtube, Instagram, Music, Mail, Phone, MapPin } from 'lucide-react';
+import { Youtube, Instagram, Music, Mail, Phone, MapPin, Facebook, Twitter } from 'lucide-react';
+
 
 // Audio equalizer bar component
 function EqualizerBar({ delay }: { delay: number }) {
@@ -36,10 +37,12 @@ export function Footer() {
   }, []);
 
   const socialLinks = [
-    { icon: Youtube, label: 'YouTube', href: '#' },
-    { icon: Instagram, label: 'Instagram', href: '#' },
+    { icon: Youtube, label: 'YouTube', href: 'https://youtube.com/@singermanishasrivastava?si=61tDsxzlWb6ilVhu' },
+    { icon: Instagram, label: 'Instagram', href: 'https://www.instagram.com/singermanishasrivastava?igsh=amtiOTFweTBsd2Nt' },
     { icon: Music, label: 'Spotify', href: '#' },
     { icon: Mail, label: 'Email', href: 'mailto:contact@manishasrivastav.com' },
+    { icon:Facebook, label:'Facebook', href:'https://www.facebook.com/share/1Bn7YdowZi/'},
+    { icon: Twitter, label:'X', href: 'https://x.com/ManishaFolk?t=J79MihBjFJOSfNJC5Dr1XQ&s=09'}
   ];
 
   const quickLinks = [
@@ -47,8 +50,10 @@ export function Footer() {
     { name: 'About', href: '#about' },
     { name: 'Music', href: '#music' },
     { name: 'Videos', href: '#videos' },
+    { name: 'Gallery', href: '#gallery' },
     { name: 'Lyrics', href: '#lyrics' },
     { name: 'Contact', href: '#contact' },
+    
   ];
 
   return (
@@ -78,10 +83,10 @@ export function Footer() {
           {/* Brand Section */}
           <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <h3 className="text-3xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 mb-4">
-              Manisha Srivastav
+              Manisha Srivastava
             </h3>
             <p className="text-amber-300 mb-6">
-              Singer • Performer • Storyteller
+              Singer • Performer 
             </p>
             <p className="text-gray-400 text-sm leading-relaxed">
               Bringing the magic of melody and emotion through timeless performances that touch the soul.
@@ -97,7 +102,7 @@ export function Footer() {
             <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.name}>
-                  <a
+                  <a 
                     href={link.href}
                     className="text-gray-400 hover:text-amber-400 transition-colors flex items-center gap-2 group"
                   >
@@ -120,7 +125,7 @@ export function Footer() {
                 <Mail className="w-5 h-5 text-amber-400 mt-0.5 group-hover:text-amber-300 transition-colors" />
                 <div>
                   <a href="mailto:contact@manishasrivastav.com" className="hover:text-amber-400 transition-colors">
-                    contact@manishasrivastav.com
+                    contact@manishasrivastava.com
                   </a>
                 </div>
               </div>
@@ -139,6 +144,7 @@ export function Footer() {
               {socialLinks.map((social) => (
                 <a
                   key={social.label}
+                  target='_blank'
                   href={social.href}
                   className="relative w-10 h-10 bg-gradient-to-br from-purple-600/20 to-pink-600/20 hover:from-amber-600/40 hover:to-purple-600/40 border-2 border-amber-500/30 hover:border-amber-500/70 rounded-full flex items-center justify-center text-amber-400 hover:text-amber-300 transition-all hover:scale-110 hover:-translate-y-1 active:scale-95 group shadow-[0_0_15px_rgba(168,85,247,0.3)] hover:shadow-[0_0_25px_rgba(251,191,36,0.6)]"
                   aria-label={social.label}

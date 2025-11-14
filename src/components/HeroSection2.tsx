@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import im from "../assets/Gemini_Generated_Image_l35037l35037l350.png";
-
+import "../App.css"
 export default function HeroSection() {
   const [hero, setHero] = useState<{
     name: string;
@@ -26,6 +26,7 @@ export default function HeroSection() {
   }, []);
 
   return (
+    
     <section id="hero" className="relative w-full  flex justify-center items-center py-20 px-6">
       <div className="max-w-7xl w-full flex flex-col md:flex-row bg-[#111827] rounded-lg overflow-hidden shadow-2xl relative">
         {/* Left Image Section */}
@@ -34,11 +35,14 @@ export default function HeroSection() {
           <img
             src={hero?.image || im}
             alt={hero?.name || "Hero Image"}
-            className="object-cover w-full h-full rounded-r-[120px] md:rounded-r-[200px]"
+            className="object-cover w-full h-full rounded-r-[150px] md:rounded-r-[200px]"
           />
           {/* Subtle shadow for smooth blend */}
-          
-        </div>
+          {/* Crescent-style curve — like a waning moon */}
+          {/* White curved border on the right */}
+          <div className="absolute top-0 right-0 h-full w-[220px] border-r-[40px] rounded-r-[200px] pointer-events-none border-blue-950"></div>
+
+          </div>
 
         {/* Right Content Section */}
         <div className="md:w-1/2 w-full bg-[#111827] text-white flex flex-col justify-center px-10 py-12 relative z-10">

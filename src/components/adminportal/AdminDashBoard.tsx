@@ -17,8 +17,9 @@ import AdminVideo from "../adminportal/AdminVideos";
 import AdminLyrics from "../adminportal/AdminLryics";
 import AdminHeroSection from "./AdminHeroSection";
 import AdminMyActivity from "./AdminMyActivity";
+import AdminGallerySection from "./AdminGallerySection";
 
-type TabType = "about" | "video" | "lyrics"|"hero"|"myActivity";
+type TabType = "about" | "video" | "lyrics"|"hero"|"myActivity"|"adminGallery";
 
 export default function AdminDashboard() {
   const [activeTab, setActiveTab] = useState<TabType>("about");
@@ -147,6 +148,19 @@ export default function AdminDashboard() {
           >
             <Star className="w-5 h-5" /> My Activity
           </button>
+          <button
+            onClick={() => {
+              setActiveTab("adminGallery");
+              setSidebarOpen(false);
+            }}
+            className={`flex items-center gap-3 p-3 rounded-lg transition ${
+              activeTab === "adminGallery"
+                ? "bg-purple-700/60 text-amber-300"
+                : "hover:bg-purple-900/50 text-gray-300"
+            }`}
+          >
+            <Star className="w-5 h-5" /> Gallery
+          </button>
         </aside>
 
         {/* Mobile Backdrop */}
@@ -164,6 +178,7 @@ export default function AdminDashboard() {
           {activeTab === "lyrics" && <AdminLyrics />}
           {activeTab==="hero" && <AdminHeroSection/>}
           {activeTab==="myActivity" && <AdminMyActivity/>}
+          {activeTab==="adminGallery" && <AdminGallerySection/>}
         </main>
       </div>
     </div>

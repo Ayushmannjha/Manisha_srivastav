@@ -50,8 +50,9 @@ export function Navigation() {
     { name: 'Music', href: '#music' },
     { name: 'Videos', href: '#videos' },
     { name: 'Blogs/Lyrics', href: '#lyrics' },
-    { name: 'Contact', href: '#contact' },
+    { name: 'Gallery', href: '#gallery' },
     { name: 'My activity', href: '#myActivity' },
+     { name: 'Contact', href: '#contact' },
   ];
 
   return (
