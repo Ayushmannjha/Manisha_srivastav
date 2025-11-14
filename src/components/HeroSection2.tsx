@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import im from "../assets/Gemini_Generated_Image_l35037l35037l350.png";
-import "../App.css"
+import "../App.css";
+import bg from '../assets/1.png';
+
 export default function HeroSection() {
   const [hero, setHero] = useState<{
     name: string;
@@ -26,11 +28,19 @@ export default function HeroSection() {
   }, []);
 
   return (
-    
-    <section id="hero" className="relative w-full  flex justify-center items-center py-20 px-6">
-      <div className="max-w-7xl w-full flex flex-col md:flex-row bg-[#111827] rounded-lg overflow-hidden shadow-2xl relative">
+    <section
+      id="hero"
+      className="relative w-full  flex justify-center items-center py-20 px-6"
+      
+    >
+      <div className="max-w-8xl w-full flex flex-col md:flex-row rounded-lg overflow-hidden shadow-2xl relative">
+        {/* Background Overlay */}
+        <div 
+          className="absolute inset-0 rounded-lg z-10"
+          style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        />
         {/* Left Image Section */}
-        <div className="relative md:w-1/2 w-full h-[350px] md:h-auto z-20">
+        <div className="relative md:w-1/2 w-full h-[350px] md:h-auto z-0">
           {/* 👇 The image now overlaps the text section */}
           <img
             src={hero?.image || im}
@@ -40,22 +50,19 @@ export default function HeroSection() {
           {/* Subtle shadow for smooth blend */}
           {/* Crescent-style curve — like a waning moon */}
           {/* White curved border on the right */}
-          <div className="absolute top-0 right-0 h-full w-[220px] border-r-[40px] rounded-r-[200px] pointer-events-none border-blue-950"></div>
-
-          </div>
+        
+        </div>
 
         {/* Right Content Section */}
-        <div className="md:w-1/2 w-full bg-[#111827] text-white flex flex-col justify-center px-10 py-12 relative z-10">
+        <div className="md:w-1/2 w-full  text-white flex flex-col justify-center px-10 py-12 relative z-20">
           {/* Floating background circles for subtle design */}
           <div className="absolute top-[10%] right-[15%] w-6 h-6 border border-[#1f2937] rounded-full opacity-60" />
           <div className="absolute bottom-[15%] right-[5%] w-8 h-8 border border-[#1f2937] rounded-full opacity-60" />
 
-         
-
           <h1 className="text-4xl md:text-5xl font-extrabold text-yellow-400 mb-4 leading-tight z-10">
             {hero?.name || "Manisha Srivastava"}
           </h1>
-         {/* Dynamic Taglines */}
+          {/* Dynamic Taglines */}
           <div className="flex flex-wrap gap-3 mb-3 z-10">
             {hero?.tagline?.length ? (
               hero.tagline.map((t, i) => (
@@ -78,7 +85,7 @@ export default function HeroSection() {
               </h4>
             )}
           </div>
-          <p className="text-gray-300 text-sm md:text-base mb-8 leading-relaxed z-10">
+          <p className="text-gray-300 text-sm md:text-base mb-8 leading-relaxed pr-10 z-10">
             {hero?.description ||
               "Building immersive digital experiences that merge creativity and technology. Passionate about design, innovation, and crafting products that inspire people to engage."}
           </p>
