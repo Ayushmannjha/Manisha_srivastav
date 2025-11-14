@@ -16,7 +16,7 @@ export default function GalleryPage() {
 
   const fetchImages = async () => {
     try {
-      const res = await axios.get("http://localhost:8080/api/gallery");
+      const res = await axios.get("https://manishasrivastav-production.up.railway.app/api/gallery");
       setImages(res.data.data);
     } catch (error) {
       console.log("Error loading gallery", error);

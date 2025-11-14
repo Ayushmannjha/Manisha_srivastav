@@ -15,7 +15,7 @@ export default function MyActivity() {
     imageUrl: string;
   }>(null);
 
-  const BASE_URL = "http://localhost:8080/api/my-activity";
+  const BASE_URL = "https://manishasrivastav-production.up.railway.app/api/my-activity";
 
   // 🧾 Fetch all activities
   const fetchActivities = async () => {
