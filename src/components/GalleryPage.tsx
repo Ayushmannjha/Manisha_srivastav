@@ -40,10 +40,10 @@ export default function GalleryPage() {
   }
 
   return (
-    <section id= "gallery"className="min-h-screen text-white py-16 px-6 flex flex-col items-center bg-gradient-to-b from-black via-[#0d1117] to-black">
+    <section id= "gallery"className="min-h-screen text-white py-16 px-6 flex flex-col items-center ">
       {/* Heading */}
       <div className="text-center mb-14">
-        <h2 className="text-4xl md:text-5xl font-serif bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 bg-clip-text text-transparent mb-2">
+        <h2 className="text-4xl md:text-5xl font-serif bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 bg-clip-text text-transparent mb-2 ">
           Gallery
         </h2>
         <div className="w-24 h-1 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500 mx-auto shadow-[0_0_15px_rgba(251,191,36,0.5)]" />
@@ -63,7 +63,7 @@ export default function GalleryPage() {
                 className="bg-[#111827] border border-gray-700 rounded-xl overflow-hidden shadow-lg hover:shadow-purple-400/30 hover:scale-105 transition-all duration-300 cursor-pointer"
                 onClick={() => setOpen(img)}
               >
-                <CardContent className="p-0">
+                <CardContent className="p-0 ">
                   <img
                     src={img.imageUrl}
                     alt=""
