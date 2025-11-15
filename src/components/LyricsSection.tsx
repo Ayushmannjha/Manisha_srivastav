@@ -20,6 +20,9 @@ export function LyricsSection() {
   const [loading, setLoading] = useState(true);
   const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
+  // ⭐ New: Only load 5 initially
+  const [visibleCount, setVisibleCount] = useState(5);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -31,7 +34,6 @@ export function LyricsSection() {
     return () => observer.disconnect();
   }, []);
 
-  // ✅ Fetch posts dynamically
   useEffect(() => {
     async function fetchPosts() {
       try {
@@ -64,11 +66,8 @@ export function LyricsSection() {
   };
 
   return (
-    <section
-      id="lyrics"
-      ref={ref}
-      className="relative py-24  overflow-hidden"
-    >
+    <section id="lyrics" ref={ref} className="relative py-24 overflow-hidden bg-black">
+      
       {/* Floating symbols */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-10">
         {[...Array(15)].map((_, i) => (
@@ -87,7 +86,7 @@ export function LyricsSection() {
         ))}
       </div>
 
-      {/* Faint waveforms */}
+      {/* Waveforms */}
       <div className="absolute inset-0 opacity-5">
         <svg className="w-full h-full" preserveAspectRatio="none">
           <path
@@ -98,7 +97,9 @@ export function LyricsSection() {
           >
             <animate
               attributeName="d"
-              values="M0,50 Q25,30 50,50 T100,50;M0,50 Q25,70 50,50 T100,50;M0,50 Q25,30 50,50 T100,50"
+              values="M0,50 Q25,30 50,50 T100,50;
+                      M0,50 Q25,70 50,50 T100,50;
+                      M0,50 Q25,30 50,50 T100,50"
               dur="4s"
               repeatCount="indefinite"
             />
@@ -113,7 +114,7 @@ export function LyricsSection() {
         </svg>
       </div>
 
-      {/* Main content */}
+      {/* Header */}
       <div className="container mx-auto px-6 relative z-10">
         <div
           className={`text-center mb-16 transition-all duration-700 ${
@@ -123,20 +124,20 @@ export function LyricsSection() {
           <h2 className="text-4xl md:text-5xl font-serif text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-purple-300 to-pink-300 mb-4">
             Lyrics & Stories
           </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500 mx-auto mb-6 shadow-[0_0_10px_rgba(251,191,36,0.5)]" />
+          <div className="w-24 h-1 bg-gradient-to-r from-amber-500 via-purple-500 to-pink-500 mx-auto mb-6" />
           <p className="text-gray-400 max-w-2xl mx-auto">
             Dive into the words behind the music and the stories behind the songs
           </p>
         </div>
 
-        {/* Posts grid */}
+        {/* Posts */}
         {loading ? (
           <p className="text-center text-gray-400">Loading posts...</p>
         ) : posts.length === 0 ? (
           <p className="text-center text-gray-400">No posts found.</p>
         ) : (
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
-            {posts.map((post, index) => (
+            {posts.slice(0, visibleCount).map((post, index) => (
               <div
                 key={post._id}
                 className={`transition-all duration-500 hover:-translate-y-2 ${
@@ -161,9 +162,8 @@ export function LyricsSection() {
                       </h3>
                     )}
 
-                    {/* Category Badge */}
                     <div className="absolute top-4 left-4">
-                      <span className="px-3 py-1 bg-black/50 backdrop-blur-sm rounded-full text-white text-xs flex items-center gap-1">
+                      <span className="px-3 py-1 bg-black/50 rounded-full text-white text-xs flex items-center gap-1">
                         {post.category === "Lyrics" ? (
                           <Music2 className="w-3 h-3" />
                         ) : (
@@ -178,13 +178,16 @@ export function LyricsSection() {
                     <h3 className="text-white mb-3 line-clamp-2 group-hover:text-amber-300 transition-colors">
                       {post.title}
                     </h3>
+
                     <div className="flex items-center gap-2 text-amber-300 text-sm mb-3">
                       <Calendar className="w-4 h-4" />
                       <span>{new Date(post.date).toLocaleDateString()}</span>
                     </div>
+
                     <p className="text-gray-400 text-sm line-clamp-3">
                       {post.preview || post.content?.slice(0, 100) + "..."}
                     </p>
+
                     <div className="mt-4">
                       <span className="text-amber-400 text-sm hover:text-amber-300 transition-colors group-hover:underline inline-flex items-center gap-1">
                         Read More →
@@ -197,19 +200,24 @@ export function LyricsSection() {
           </div>
         )}
 
-        {/* View All */}
-        <div
-          className={`text-center mt-12 transition-all duration-700 delay-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-        >
-          <button className="px-8 py-3 bg-gradient-to-r from-amber-600/30 via-purple-600/30 to-pink-600/30 border-2 border-amber-500/50 rounded-full text-amber-300 hover:scale-105 transition-all">
-            View All Posts
-          </button>
-        </div>
+        {/* ⭐ Load More Button */}
+        {visibleCount < posts.length && !loading && (
+          <div
+            className={`text-center mt-12 transition-all duration-700 delay-700 ${
+              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+            }`}
+          >
+            <button
+              onClick={() => setVisibleCount((prev) => prev + 5)}
+              className="px-8 py-3 bg-gradient-to-r from-amber-600/30 via-purple-600/30 to-pink-600/30 border-2 border-amber-500/50 rounded-full text-amber-300 hover:scale-105 transition-all"
+            >
+              View More Posts
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* 💫 MODAL */}
+      {/* Modal */}
       {selectedPost && (
         <div
           className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 animate-fadeIn p-4"
@@ -234,20 +242,23 @@ export function LyricsSection() {
                   className="w-full rounded-lg mb-4"
                 />
               )}
+
               <h2 className="text-3xl font-bold text-amber-300 mb-3">
                 {selectedPost.title}
               </h2>
+
               <div className="flex items-center gap-2 text-sm text-gray-400 mb-4">
                 <Calendar className="w-4 h-4" />
                 <span>{new Date(selectedPost.date).toLocaleDateString()}</span>
               </div>
+
               <div className="text-gray-300 whitespace-pre-line leading-relaxed">
                 {selectedPost.content}
               </div>
             </div>
           </div>
 
-          {/* custom scrollbar */}
+          {/* Styles */}
           <style>{`
             .custom-scrollbar::-webkit-scrollbar {
               width: 8px;
@@ -255,9 +266,6 @@ export function LyricsSection() {
             .custom-scrollbar::-webkit-scrollbar-thumb {
               background: linear-gradient(to bottom, #fbbf24, #a855f7);
               border-radius: 4px;
-            }
-            .custom-scrollbar::-webkit-scrollbar-track {
-              background: transparent;
             }
             @keyframes float {
               0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.1; }

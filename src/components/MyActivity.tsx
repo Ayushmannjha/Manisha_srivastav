@@ -142,17 +142,17 @@ export default function MyActivity() {
 
       {/* 🪶 Description Modal */}
       {selected && (
-        <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black/80 flex justify-center items-center z-50 ">
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0 }}
-            className="bg-[#1f2937] rounded-xl shadow-xl max-w-3xl w-full mx-4 overflow-hidden border border-gray-700"
+            className="bg-[#1f2937] rounded-xl shadow-xl max-w-4xl w-full mx-4 overflow-hidden border border-gray-700"
           >
             <img
               src={selected.imageUrl}
               alt={selected.title}
-              className="w-full h-80 object-cover"
+              className="w-full h-100 object-fit"
             />
             <div className="p-6 text-white">
               <h3 className="text-2xl font-bold text-amber-300 mb-3">
