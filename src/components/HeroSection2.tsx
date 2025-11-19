@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import im from "../assets/Gemini_Generated_Image_l35037l35037l350.png";
 import "../App.css";
-import bg from '../assets/1.png';
+// using public images via Tailwind classes; imported asset removed
 
 export default function HeroSection() {
   const [hero, setHero] = useState<{
@@ -35,9 +35,9 @@ export default function HeroSection() {
     >
       <div className="max-w-8xl w-full flex flex-col md:flex-row rounded-lg overflow-hidden shadow-2xl relative">
         {/* Background Overlay */}
-        <div 
-          className="absolute inset-0 rounded-lg z-10"
-          style={{ backgroundImage: `url(${bg})`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+        <div
+          className={`absolute inset-0 rounded-lg z-10 md:bg-[url('/1.png')] bg-[url('/Phone.png')] bg-no-repeat bg-center bg-contain `}
+          style={{ backgroundSize: 'cover', backgroundPosition: 'center' }}
         />
         {/* Left Image Section */}
         <div className="relative md:w-1/2 w-full h-[350px] md:h-auto z-0">
@@ -45,7 +45,7 @@ export default function HeroSection() {
           <img
             src={hero?.image || im}
             alt={hero?.name || "Hero Image"}
-            className="object-cover w-full h-full rounded-r-[150px] md:rounded-r-[200px]"
+            className="object-cover w-full h-full md:rounded-r-[200px]"
           />
           {/* Subtle shadow for smooth blend */}
           {/* Crescent-style curve — like a waning moon */}
@@ -54,7 +54,7 @@ export default function HeroSection() {
         </div>
 
         {/* Right Content Section */}
-        <div className="md:w-1/2 w-full  text-white flex flex-col justify-center px-10 py-12 relative z-20">
+        <div className="md:w-1/2 w-full  text-white flex flex-col justify-center sm:px-10 px-6 py-12 relative z-20">
           {/* Floating background circles for subtle design */}
           <div className="absolute top-[10%] right-[15%] w-6 h-6 border border-[#1f2937] rounded-full opacity-60" />
           <div className="absolute bottom-[15%] right-[5%] w-8 h-8 border border-[#1f2937] rounded-full opacity-60" />
@@ -85,7 +85,7 @@ export default function HeroSection() {
               </h4>
             )}
           </div>
-          <p className="text-gray-300 text-sm md:text-base mb-8 leading-relaxed pr-10 z-10">
+          <p className="text-gray-300 text-sm md:text-base mb-8 leading-relaxed sm:pr-10 z-10">
             {hero?.description ||
               "Building immersive digital experiences that merge creativity and technology. Passionate about design, innovation, and crafting products that inspire people to engage."}
           </p>
